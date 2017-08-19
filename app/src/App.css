@@ -1,0 +1,57 @@
+.background_container {
+  background: url('https://r6db.com/assets/bg_prim.svg') no-repeat center;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+}
+
+.title_wrapper {
+  font-size: 42px;
+  color: white;
+}
+
+.rank_container {
+  width:50%;
+  height: 700vh;
+  background: rgba(0, 0, 0, 0.4); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.rank_nav_header {
+  width: 100%;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.8);   
+  height: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.rank_title {
+  padding-left: 12px;
+  font-size: 12px;
+}
+
+.rank_title h2{
+  text-align: center;
+  color: white;
+}
+
+.rank_image_container {
+  width: 180px;
+  height: 180px;
+  margin-top: 50px
+}
+
+.rank_container img {
+  width: 180px;
+  height: 180px;
+}
