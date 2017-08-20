@@ -8,7 +8,23 @@ class App extends Component {
 
     this.state = {
       playerName: '',
-      rankIcon: ''
+      rankIcon: '',
+      playerIcon: '',
+      playerLevel: '',
+      casualWins: '',
+      casualLoses: '',
+      casualDeaths: '',
+      casualWinRate: '',
+      casualKills: '',
+      casualDeaths: '',
+      casualKD: '',
+      rankedWins: '',
+      rankedLoses: '',
+      rankedDeaths: '',
+      rankedWinRate: '',
+      rankedKills: '',
+      rankedDeaths: '',
+      rankedKD: ''
     }
     this.getPlayerName = this.getPlayerName.bind(this);
   }
@@ -24,27 +40,54 @@ class App extends Component {
     axios.get('https://r6db.com/api/v2/players?name=' + playerName, {
       headers: { "x-app-id": "web-dev_test" }
     }).then((response) => {
+      var userId = response.data[0].id;
+      var playerLevel = Number(response.data[0].level);
+
+      this.setState({
+        playerIcon: 'https://uplay-avatars.s3.amazonaws.com/' + userId + '/default_146_146.png',
+        userLevel: playerLevel
+      })
+
       console.log(response)
 
       let rankAccess = Number(response.data[0].ranks["ncsa"].rank);
       var userRankIcon;
-
-      for (var i = 0; i <= rankAccess; i++) {
+      var notPlaced;
+      for (var i = 1; i <= rankAccess; i++) {
         if (Number(i) === rankAccess) {
           userRankIcon = require('./rank_images/icon_rank' + i + '.png');
           this.setState({
             rankIcon: userRankIcon
           })
-        } if(rankAccess === 0) {
-          return 
+        } else {
+          notPlaced = require('./rank_images/not_placed.png');
+          this.setState({
+            rankIcon: notPlaced
+          })
         }
       }
-    })
-      // more code here
-          axios.get('https://r6dc.com/api/v2/player/0eef8878-2db8-42b5-9123-65fca53b4c62', {
-      headers: { "x-app-id": "web-dev_test" }
-    }).then((response) => {
-      console.log(response)
+      axios.get('https://r6db.com/api/v2/players/' + userId, {
+        headers: { "x-app-id": "web-dev_test" }
+      }).then((response) => {
+        console.log(response);
+        var casualWins = Number(response.data.stats.casual.won)
+        var casualLoses;
+        var casualDeaths;
+        var casualWinRate; 
+        var casualKills;
+        var casualDeaths;
+        var casualKD;
+        var rankedWins;
+        var rankedLoses;
+        var rankedDeaths;
+        var rankedWinRate; 
+        var rankedKills;
+        var rankedDeaths;
+        var rankedKD;   
+        })
+      this.setState({
+        casualWins: this.casualWins
+      })
     })
   }
 
@@ -60,26 +103,61 @@ class App extends Component {
             <button className="search_button" onClick={() => this.onClick(this.state.playerName)}>Search </button>
           </div>
           <br />
-          <div className="rank_container">
-            <div className="rank_nav_header">
-              <div className="rank_title">
-                <h2>Current Ranking</h2>
+
+          <div className="content_container">
+            <div className="player_container">
+
+              <div className="content_header">
+                <h1>Player Information</h1>
               </div>
-            </div>
-            <div className="rank_image_container">
-              <img src={(this.state.rankIcon)} alt='' />
-            </div>
-          </div>
-          <div className="rank_container">
-            <div className="rank_nav_header">
-              <div className="rank_title">
-                <h2>Ranked Stats</h2>
+              <div className="player_icon_container">
+                <img src={(this.state.playerIcon)} alt='' />
               </div>
-              <div></div>
+
             </div>
-            <div className="rank_image_container">
-              <img src={(this.state.rankIcon)} alt='' />
+            <div className="rank_container">
+
+              <div className="content_header">
+                <h1>Current Rank</h1>
+              </div>
+              <div className="rank_icon_container">
+                <img src={(this.state.rankIcon)} alt='' />
+                </div>
+
             </div>
+
+            <div className="casual_stats_container">
+              <div className="content_header">
+                <h1>Casual Statistics</h1>
+
+              </div>
+              <div className="casual_stats">
+                <h4>Wins: {this.state.casualWins}</h4>
+                <h4>Loses</h4>
+                <h4>Win Rate</h4>
+                <h4>Kills</h4>
+                <h4>Deaths</h4>
+                <h4>K/D Ratio</h4>
+                </div>
+
+            </div>
+
+            <div className="ranked_stats_container">
+              <div className="content_header">
+                <h1>Ranked Statistics</h1>
+
+              </div>
+              <div className="ranked_stats">
+                <h4>Wins</h4>
+                <h4>Loses</h4>
+                <h4>Win Rate</h4>
+                <h4>Kills</h4>
+                <h4>Deaths</h4>
+                <h4>K/D Ratio</h4>
+                </div>
+
+            </div>
+
           </div>
         </div>
       </section>
